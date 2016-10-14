@@ -81,20 +81,19 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
 				idArray = new String[]{ids};
 			}
 			
-			c:for (String idx : idArray) {
+			for (String idx : idArray) {
 				Long id = new Long(idx);
 				
 				List<URolePermission> rolePermissions= rolePermissionMapper.findRolePermissionByPid(id);
 				if(null != rolePermissions && rolePermissions.size() > 0){
-					errorCount+=rolePermissions.size();
-					continue c;
+					errorCount += rolePermissions.size();
 				}else{
 					successCount+=this.deleteByPrimaryKey(id);
 				}
 			}
 			resultMap.put("status", 200);
 			//如果有成功的，也有失败的，提示清楚。
-			if(successCount > 0 && errorCount > 0){
+			if(errorCount > 0){
 				resultMsg = String.format(resultMsg, successCount,errorCount);
 			}else{
 				resultMsg = "操作成功";
