@@ -30,7 +30,7 @@
 	<import resource="spring-mybatis.xml"/>
 	<import resource="spring-cache.xml"/>
 	<import resource="spring-shiro.xml"/>
-	<!-- 定时任务，运行去掉 -->
+	<!-- 定时任务，运行去掉
 	<import resource="spring-timer.xml"/>
-	
+	 -->
 </beans>
