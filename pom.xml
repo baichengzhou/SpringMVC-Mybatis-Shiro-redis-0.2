@@ -7,7 +7,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>new.json</name>
+	<name>www.sojson.com</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -80,12 +80,6 @@
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>1.2_04</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
