@@ -65,7 +65,7 @@
 		left join (select id from u_user where id =#{id,jdbcType=BIGINT}) uu on uu.id = uur.uid
 		group by ur.id
   		 -->
-  		select ur.id,ur.name,ur.type.ifnull(uur.uid,0) marker from u_role ur
+  		select ur.id,ur.name,ur.type,ifnull(uur.uid,0) marker from u_role ur
 		left join(select * from u_user_role where uid=#{id,jdbcType=BIGINT}) uur on uur.rid = ur.id
   </select>
   
