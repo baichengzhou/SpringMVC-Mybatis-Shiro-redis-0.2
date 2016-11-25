@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SpringMVC-Mybatis-Shiro-redis-0.2"
+  id="myeclipse.1415546580651"
+  context-root="/"
+  j2ee-spec="5.0"
+  archive="SpringMVC-Mybatis-Shiro-redis-0.2.war">
+  <attributes>
+    <attribute name="webrootdir" value="/src/main/webapp" />
+  </attributes>
+</project-module>
+

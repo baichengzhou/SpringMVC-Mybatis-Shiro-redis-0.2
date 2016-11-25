@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.URoleMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.URole" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, type
+  </sql>
+  
+  <sql id="limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="where_all">
+  	<where>
+  	<if test="findContent != null and findContent !='' " >
+        and (
+        LOWER(name) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
+        LOWER(type) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")
+        )
+      </if>
+      </where>
+  </sql>
+  
+  <!-- ====================================		初始化数据（调用存储过程）	========================================= -->
+	<insert id="initData">
+		{call init_shiro_demo()}
+	</insert>
+  
+  <!-- ====================================		初始化数据（调用存储过程）	========================================= -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <select id="findRoleByUserId" resultType="java.lang.String">
+  		select r.type from u_role r,u_user_role ur where ur.rid = r.id and ur.uid = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 普通的分页查询 -->
+  <select id="findAll" resultMap="BaseResultMap" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from u_role 
+    <include refid="where_all"/>
+    <include refid="limit_sql" />
+  </select>
+  <select id="findCount" resultMap="BaseResultMap" >
+ 	 select count(id) from  u_role
+  	<include refid="where_all" />
+  </select>
+  
+  <!-- 选择角色给用户 ，checkbox 列表-->
+  <select id="selectRoleByUserId" resultType="com.sojson.permission.bo.URoleBo">
+  		<!-- 
+		select ur.id,ur.name,ur.type,ifnull(uu.id,0)marker from u_role ur
+		left join u_user_role uur on uur.uid = ur.id
+		left join (select id from u_user where id =#{id,jdbcType=BIGINT}) uu on uu.id = uur.uid
+		group by ur.id
+		 -->
+		select ur.id,ur.name,ur.type,ifnull(uur.uid,0) marker from u_role ur
+		left join(select * from u_user_role where uid=#{id,jdbcType=BIGINT}) uur on uur.rid = ur.id
+  </select>
+  
+  <!-- 权限分配的分页查询 -->
+  <select id="findRoleAndPermission" resultType="com.sojson.permission.bo.RolePermissionAllocationBo">
+  	select ur.id,ur.type,ur.name,group_concat(up.name) permissionNames,group_concat(up.id)permissionIds from 
+	u_role ur 
+	left join u_role_permission urp on urp.rid = ur.id
+	left join u_permission up on up.id = urp.pid
+	<where>
+		<if test="findContent != null and findContent !='' " >
+	        and (
+	        LOWER(ur.name) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
+	        LOWER(ur.type) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")
+	        )
+      </if>
+	</where>
+	group by ur.id
+  	<include refid="limit_sql" />
+  </select>
+  
+  <!-- Mybatis 一对多 Demo  begin -->
+  
+  <!-- 查询用户全部的role & permission -->
+  <resultMap id="findNowAllPermission_resultMap" extends="BaseResultMap" type="com.sojson.common.model.URole" >
+  	<collection property="permissions" javaType="com.sojson.common.model.UPermission">
+  	 	<id column="pid" property="id" jdbcType="BIGINT" />
+    	<result column="pname" property="name" jdbcType="VARCHAR" />
+    	<result column="url" property="url" jdbcType="VARCHAR" />
+  	</collection>
+  </resultMap>
+  <!-- 根据用户ID，查询所有权限 -->
+  <select id="findNowAllPermission" resultMap="findNowAllPermission_resultMap">
+	select ur.id,ur.name,ur.type ,up.id pid,up.url,up.name pname 
+		from (select rid from u_user_role where uid = #{userId,jdbcType=BIGINT}) uur 
+		left join u_role ur on uur.rid = ur.id
+		left join u_role_permission urp on urp.rid = ur.id
+		left join u_permission up on up.id = urp.pid
+  </select>
+   <!-- Mybatis 一对多 Demo  end -->
+   
+   
+   
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from u_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.URole" >
+    insert into u_role (id, name, type
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.URole" >
+    insert into u_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.URole" >
+    update u_role
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sojson.common.model.URole" >
+    update u_role
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
