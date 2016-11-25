@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.URolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.URolePermission" >
+    <result column="rid" property="rid" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    rid, pid
+  </sql>
+  <!-- 根据权限ID查找 -->
+  <select id="findRolePermissionByPid" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from u_role_permission
+  	where pid =  #{id,jdbcType=BIGINT}
+  </select> 
+  <!-- 根据角色ID查找 -->
+  <select id="findRolePermissionByRid" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from u_role_permission
+  	where rid =  #{id,jdbcType=BIGINT}
+  </select> 
+  <!-- 根据权限 && 角色ID查找 -->
+  <select id="find" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from u_role_permission
+  	where rid =  #{rid,jdbcType=BIGINT}
+  	and  pid =  #{pid,jdbcType=BIGINT}
+  </select> 
+  <!-- 根据权限ID删除-->
+  <delete id="deleteByPid">
+  	delete from u_role_permission where pid =  #{id,jdbcType=BIGINT}
+  </delete>
+   <!-- 根据角色ID删除-->
+  <delete id="deleteByRid">
+  	delete from u_role_permission where rid =  #{id,jdbcType=BIGINT}
+  </delete>
+  <!-- 根据角色ID && 权限ID删除-->
+  <delete id="delete">
+  	delete from u_role_permission where rid =  #{rid,jdbcType=BIGINT}
+  	and  pid =  #{pid,jdbcType=BIGINT}
+  </delete>
+  <!-- 根据角色IDs删除-->
+  <delete id="deleteByRids">
+  	delete from u_role_permission where rid in(${roleIds})
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.sojson.common.model.URolePermission" >
+    insert into u_role_permission (rid, pid)
+    values (#{rid,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sojson.common.model.URolePermission" >
+    insert into u_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
