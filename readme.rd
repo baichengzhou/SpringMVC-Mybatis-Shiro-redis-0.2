@@ -1,6 +1,6 @@
 本项目详细介绍请看：http://www.sojson.com/shiro （强烈推荐）
 
-Demo已经部署到线上，地址是http://shiro.itboy.net，
+Demo已经部署到线上，地址是http://shiro.itboy.net   ，
 管理员帐号：admin，密码：sojson.com 如果密码错误，请用sojson。
 PS：你可以注册自己的帐号，然后用管理员赋权限给你自己的帐号，但是，每20分钟会把数据初始化一次。建议自己下载源码，让Demo跑起来，然后跑的更快，有问题加群解决。
 
@@ -11,7 +11,7 @@ PS：你可以注册自己的帐号，然后用管理员赋权限给你自己的
 使用过程：
 
 1.创建数据库。
-创建语句		   ：init.data.sql
+创建语句：init.data.sql
 
 2.插入初始化数据
 插入初始化数据：tables.sql
