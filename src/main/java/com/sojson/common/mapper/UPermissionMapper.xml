@@ -39,10 +39,27 @@
   </select>
   
   <select id="selectPermissionById" resultType="com.sojson.permission.bo.UPermissionBo">
-		select  DISTINCT up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+	  <!-- 你修改的有问题，有重复数据
+	select  DISTINCT up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
 		left join u_role_permission urp on urp.pid = up.id
 		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
 		order by up.id
+	-->
+	  
+	  
+	<!--	原来的语句，应该是没错误。
+  		有同学说有错误，请给出mysql版本号，我现在的mysql 版本是5.6。
+  		但是发现一个问题（我没尝试），在mysql 5.7版本中，没有结果集。故做了一下修改。
+		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+		left join u_role_permission urp on urp.pid = up.id
+		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
+		group by up.id
+  	 -->
+  	 select up.id,ur.id roleId,up.name,up.url,max(ifnull(ur.id,0))marker from u_permission up
+		left join u_role_permission urp on urp.pid = #{id,jdbcType=BIGINT}
+		left join u_role ur on ur.id = #{id,jdbcType=BIGINT}
+		group by up.id
+	  
   </select>
   <!-- 根据用ID查询permission -->
   <select id="findPermissionByUserId" resultType="java.lang.String">
