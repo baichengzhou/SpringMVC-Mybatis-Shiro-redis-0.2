@@ -37,11 +37,24 @@
  	 select count(id) from  u_permission
   	<include refid="where_all" />
   </select>
-  
+  <!-- 根据角色获取权限，marker:0,没有权限，marker：非0(和up.id)一致表示有权限。 
+  	com.sojson.permission.bo.UPermissionBo中的这个方法是校验权限
+  	public boolean isCheck(){
+		return StringUtils.equals(roleId,marker);
+	}
+  -->
   <select id="selectPermissionById" resultType="com.sojson.permission.bo.UPermissionBo">
+  	<!--原来的语句，应该是没错误。
+  		有同学说有错误，请给出mysql版本号。
+  		但是发现一个问题（我没尝试），在mysql 5.7版本中，没有结果集。故做了一下修改。
 		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
 		left join u_role_permission urp on urp.pid = up.id
 		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
+		group by up.id
+  	 -->
+  	 select up.id,ur.id roleId,up.name,up.url,max(ifnull(ur.id,0))marker from u_permission up
+		left join u_role_permission urp on urp.pid = #{id,jdbcType=BIGINT}
+		left join u_role ur on ur.id = #{id,jdbcType=BIGINT}
 		group by up.id
   </select>
   <!-- 根据用ID查询permission -->
