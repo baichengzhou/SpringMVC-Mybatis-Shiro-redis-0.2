@@ -66,7 +66,7 @@ public class MemberController extends BaseController {
 	 * 在线用户管理
 	 * @return
 	 */
-	@RequestMapping(value="online",method=RequestMethod.GET)
+	@RequestMapping(value="online")
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
 		return new ModelAndView("member/online","list",list);
