@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import net.sf.json.JSONObject;
+
 /**
  * 
  * 开发公司：SOJSON在线工具 <p>
@@ -14,7 +16,7 @@ import java.io.ObjectOutputStream;
  * 博客地址：http://www.sojson.com/blog/  <p>
  * <p>
  * 
- * Java版的 Serialize
+ * Java原生版的 Serialize
  * 
  * <p>
  * 
@@ -28,9 +30,10 @@ import java.io.ObjectOutputStream;
  */
 @SuppressWarnings("unchecked")
 public class SerializeUtil {
-
+	static final Class<?> CLAZZ = SerializeUtil.class;
+	
     public static byte[] serialize(Object value) {
-        if (value == null) {
+        if (value == null) { 
             throw new NullPointerException("Can't serialize null");
         }
         byte[] rv = null;
@@ -44,8 +47,7 @@ public class SerializeUtil {
             bos.close();
             rv = bos.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("serialize error");
+        	LoggerUtils.fmtError(CLAZZ,e, "serialize error %s", JSONObject.fromObject(value));
         } finally {
             close(os);
             close(bos);
@@ -69,8 +71,7 @@ public class SerializeUtil {
                 rv = is.readObject();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("deserialize error");
+        	 LoggerUtils.fmtError(CLAZZ,e, "serialize error %s", in);
         } finally {
             close(is);
             close(bis);
@@ -83,8 +84,7 @@ public class SerializeUtil {
             try {
                 closeable.close();
             } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("close stream error");
+            	 LoggerUtils.fmtError(CLAZZ, "close stream error");
             }
     }
 
