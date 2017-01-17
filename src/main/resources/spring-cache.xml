@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+    		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+	default-lazy-init="false">
+		
+	 <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="100"/><!-- 最大闲置 -->
+        <property name="minIdle" value="10"/><!-- 最小闲置 -->
+        <property name="testOnBorrow" value="true"/><!-- 可以获取 -->
+<!--        <property name="testOnReturn" value="true"/>-->
+    </bean>
+	<!-- redis 配置,也可以把配置挪到properties配置文件中,再读取 -->
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<!-- 端口，默认6379 -->
+	    <constructor-arg index="2" value="6379"  name="port" type="int"/>
+	    <constructor-arg index="3" value="5000"  name="timeout" type="int"/>
+	    <constructor-arg index="1" value="127.0.0.1" name="host" type="java.lang.String"/>
+	    <!-- 如果你需要配置密码，请打开这里。
+	        <constructor-arg index="4" value="你的密码" name="password" type="java.lang.String"/>
+	    -->
+	</bean>
+	<!-- 
+		这种 arguments 构造的方式，之前配置有缺点。
+		这里之前的配置有问题，因为参数类型不一致，有时候jar和环境的问题，导致参数根据index对应，会处理问题，
+		理论上加另一个 name，就可以解决，现在把name 和type都加上，更保险。
+	 -->	
+</beans>
