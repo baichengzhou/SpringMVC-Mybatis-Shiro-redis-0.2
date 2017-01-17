@@ -10,6 +10,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 
 import com.sojson.common.utils.LoggerUtils;
@@ -40,12 +41,12 @@ public class ShiroManagerImpl implements ShiroManager {
 	private static final String CRLF = "\r\n";
 
 	@Resource
+	@Autowired
 	private ShiroFilterFactoryBean shiroFilterFactoryBean;
 
 
 	@Override
 	public String loadFilterChainDefinitions() {
-		
 		StringBuffer sb = new StringBuffer();
 			sb.append(getFixedAuthRule());//固定权限，采用读取配置文件
 		return sb.toString();
