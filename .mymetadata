@@ -3,7 +3,7 @@
   type="WEB"
   name="shiro_ssm"
   id="myeclipse.1415546580651"
-  context-root="/"
+  context-root="/shiro.demo"
   j2ee-spec="5.0"
   archive="shiro_ssm.war">
   <attributes>
