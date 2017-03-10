@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <title>Shiro Demo | 登录</title>
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-        <link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
-		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
+        <link   rel="icon" href="https://open.itboy.net/favicon.ico" type="image/x-icon" />
+		<link   rel="shortcut icon" href="https://open.itboy.net/favicon.ico" />
         <!-- CSS -->
-        <link rel="stylesheet" href="http://open.sojson.com/itboy/js/itboy/app/reset.css">
-        <link rel="stylesheet" href="http://open.sojson.com/itboy/js/itboy/app/supersized.css">
-        <link rel="stylesheet" href="http://open.sojson.com/itboy/js/itboy/app/style.css"/>
+        <link rel="stylesheet" href="http://open.itboy.net/itboy/js/itboy/app/reset.css">
+        <link rel="stylesheet" href="http://open.itboy.net/itboy/js/itboy/app/supersized.css">
+        <link rel="stylesheet" href="http://open.itboy.net/itboy/js/itboy/app/style.css"/>
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="http://static.supportfolios.com/js/www/html5shiv.js"></script>
@@ -169,10 +169,10 @@
             </form>
         </div>
         <!-- Javascript -->
-       <script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
-        <script src="http://open.sojson.com/common/MD5.js"></script>
-        <script src="http://open.sojson.com/itboy/js/itboy/app/supersized.3.2.7.min.js"></script>
-        <script src="http://open.sojson.com/itboy/js/itboy/app/supersized-init.js"></script>
+       <script  src="http://open.itboy.net/common/jquery/jquery1.8.3.min.js"></script>
+        <script src="http://open.itboy.net/common/MD5.js"></script>
+        <script src="http://open.itboy.net/itboy/js/itboy/app/supersized.3.2.7.min.js"></script>
+        <script src="http://open.itboy.net/itboy/js/itboy/app/supersized-init.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
         <script >
 			jQuery(document).ready(function() {
