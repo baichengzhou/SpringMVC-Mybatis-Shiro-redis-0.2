@@ -2,8 +2,10 @@
 <%--shiro 标签 --%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %> 
-<base href="<%=basePath%>">
+<% 
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+ %> 
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/user.login.js"></script>
 <div class="navbar navbar-inverse navbar-fixed-top animated fadeInDown" style="z-index: 101;height: 41px;">
 	  
