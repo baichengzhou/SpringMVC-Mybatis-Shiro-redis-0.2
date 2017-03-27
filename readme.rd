@@ -11,17 +11,18 @@ PS：你可以注册自己的帐号，然后用管理员赋权限给你自己的
 使用过程：
 
 1.创建数据库。
-创建语句		   ：init.data.sql
+创建语句		   ：tables.sql
 
 2.插入初始化数据
-插入初始化数据：tables.sql
+插入初始化数据：init.data.sql
 
 
 3.运行。
 
 
 管理员帐号：admin
-密码：sojson.com
+密码：sojson
+ps:定时任务的sql会把密码改变为sojson.com 
 
 
 新版本说明：http://www.sojson.com/blog/164.html 和 http://www.sojson.com/blog/165.html
