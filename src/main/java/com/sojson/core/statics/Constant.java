@@ -2,7 +2,6 @@ package com.sojson.core.statics;
 
 import java.util.Calendar;
 
-import com.sojson.common.utils.DateUtil;
 import com.sojson.core.config.IConfig;
 
 /**
@@ -73,8 +72,8 @@ public interface Constant {
 	
 	/**地址**/
 	static final String DOMAIN_WWW = IConfig.get("domain.www");//前端域名
-	static final String DOMAIN_CDN = IConfig.get("domain.cdn");//后台域名
-	static String VERSION = DateUtil.dateToStringWithTime();//版本号，重启的时间
+	static final String DOMAIN_CDN = IConfig.get("domain.cdn");//静态资源域名
+	static String VERSION = String.valueOf(System.currentTimeMillis());//版本号，重启的时间
 	
 	
 	//存储到缓存，标识用户的禁止状态，解决在线用户踢出的问题
