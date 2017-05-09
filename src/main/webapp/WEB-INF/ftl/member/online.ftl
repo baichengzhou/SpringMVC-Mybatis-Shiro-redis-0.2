@@ -4,11 +4,11 @@
 		<meta charset="utf-8" />
 		<title>当前在线Session — SSM + Shiro Demo</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-		<link   rel="icon" href="https://open.itboy.net/favicon.ico" type="image/x-icon" />
-		<link   rel="shortcut icon" href="https://open.itboy.net/favicon.ico" />
+		<link   rel="icon" href="${basePath}/favicon.ico" type="image/x-icon" />
+		<link   rel="shortcut icon" href="${basePath}/favicon.ico" />
 		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
 		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
-		<script  src="http://open.itboy.net/common/jquery/jquery1.8.3.min.js"></script>
+		<script  src="${basePath}/js/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
@@ -56,13 +56,9 @@
 					<hr>
 					<form method="post" action="" id="formId" class="form-inline">
 						<div clss="well">
-					      <div class="form-group">
-					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
-					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号">
-					      </div>
-					     <span class=""> <#--pull-right -->
-				         	<button type="submit" class="btn btn-primary">查询</button>
-				         </span>    
+					     	<p>这里是在线已经登录的<code>有效</code>Session，不能等同于当前在线用户，来源于Redis。</p>
+					     	<p>再者，说明一个问题，老有同学纠结怎么删除无效的Session，也就是删除用户直接关闭浏览器，导致无法继续使用的Session，我再次严正声明，这个Session不需要你删除，别纠结了，这个Session是有TTL，有效期是30分钟，30分钟这个Session没有更新就会剔除，故你不用纠结。</p>
+					     	<p>老有同学纠结这个，美其名曰为了更好的效率，为了效率你去干干其他的事情。</p>
 				        </div>
 					<hr>
 					<table class="table table-bordered">
