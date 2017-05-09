@@ -59,14 +59,16 @@
 	group by u.id 
   </select>
   <select id="selectRoleByUserId" resultType="com.sojson.permission.bo.URoleBo">
-  		<!-- 
+  		
 		select ur.id,ur.name,ur.type,ifnull(uu.id,0)marker,uu.id userId from u_role ur
 		left join u_user_role uur on uur.rid = ur.id
 		left join (select id from u_user where id =#{id,jdbcType=BIGINT}) uu on uu.id = uur.uid
 		group by ur.id
-  		 -->
+  		<!-- 
+  		勾选不上自己调整sql语句，由于mysql版本不同，所以不支持，可以看看Demo项目 http://shiro.itboy.net
   		select ur.id,ur.name,ur.type,ifnull(uur.uid,0) marker from u_role ur
 		left join(select * from u_user_role where uid=#{id,jdbcType=BIGINT}) uur on uur.rid = ur.id
+		 -->
   </select>
   
   <!-- 登录 -->

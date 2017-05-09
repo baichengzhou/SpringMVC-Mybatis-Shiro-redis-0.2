@@ -47,12 +47,14 @@
   	<!--原来的语句，应该是没错误。
   		有同学说有错误，请给出mysql版本号。
   		但是发现一个问题（我没尝试），在mysql 5.7版本中，没有结果集。故做了一下修改。
-		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+		
+		2017年5月9日 15:27:46，又换回去了，因为Demo项目的数据库是5.6的，然后这2个语句都可以，你自己切换。
+  	 select up.id,ur.id roleId,up.name,up.url,min(ifnull(ur.id,0))marker from u_permission up
 		left join u_role_permission urp on urp.pid = up.id
 		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
 		group by up.id
   	 -->
-  	 select up.id,ur.id roleId,up.name,up.url,min(ifnull(ur.id,0))marker from u_permission up
+		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
 		left join u_role_permission urp on urp.pid = up.id
 		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
 		group by up.id
