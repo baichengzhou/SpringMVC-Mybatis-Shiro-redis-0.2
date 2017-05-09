@@ -28,6 +28,15 @@
 		</plugins>
 		<resources>
 			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.ini</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.properties</include>
@@ -45,20 +54,20 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		  <groupId>javax.servlet</groupId>
-		  <artifactId>jstl</artifactId>
-		  <version>1.2</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
-	    <dependency>
-	      <groupId>javax.servlet</groupId>
-	      <artifactId>jsp-api</artifactId>
-	      <version>2.0</version>
-	      <scope>provided</scope>
-	    </dependency>
-	    <dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-juli</artifactId>
-		    <version>7.0.27</version>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-juli</artifactId>
+			<version>7.0.27</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
