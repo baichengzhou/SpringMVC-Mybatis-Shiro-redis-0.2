@@ -51,7 +51,7 @@
 			 <@shiro.hasPermission name="/role/allocation.shtml">
 			  <li class="${(index==2)?string('active',' ')} dropdown">
 			      <a href="${basePath}/role/allocation.shtml">
-			    	 <i class="glyphicon glyphicon-chevron-right"></i>角色分配
+			    	 <i class="glyphicon glyphicon-chevron-right"></i>角色分配（这是个JSP页面）
 			      </a>
 			  </li>
 			  </@shiro.hasPermission>
