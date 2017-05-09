@@ -16,11 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>"/>
 		<title>用户角色分配 - 权限管理</title>
     	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-		<link   rel="icon" href="https://open.itboy.net/favicon.ico" type="image/x-icon" />
-		<link   rel="shortcut icon" href="http://img.wenyifan.net/images/favicon.ico" />
-		<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
-		<link href="<%=basePath%>/css/common/base.css?${_v}" rel="stylesheet"/>
-		<script  src="http://open.itboy.net/common/jquery/jquery1.8.3.min.js"></script>
+		<link   rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+		<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="<%=basePath%>/css/common/base.css" rel="stylesheet"/>
+		<script  src="<%=basePath%>/js/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 		<script  src="<%=basePath%>/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="<%=basePath%>/js/shiro.demo.js"></script>
@@ -137,8 +136,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						  </shiro:hasPermission>
 						 <shiro:hasPermission name="/role/allocation.shtml">
 						  <li class="active dropdown">
-						      <a href="<%=basePath%>/role/allocation.shtml">
-						    	 <i class="glyphicon glyphicon-chevron-right"></i>角色分配
+						      <a href="<%=basePath%>/role/allocation.shtml" title="角色分配（这是个JSP页面）">
+						    	 <i class="glyphicon glyphicon-chevron-right"></i>角色分配（这是个JSP页面）
 						      </a>
 						  </li>
 						  </shiro:hasPermission>
@@ -160,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</shiro:hasAnyRoles>  
 				<div class="col-md-10">
-					<h2>用户角色分配</h2>
+					<h2>用户角色分配（这是个JSP页面）</h2>
 					<hr>
 					<form method="post" action="" id="formId" class="form-inline">
 						<div clss="well">
