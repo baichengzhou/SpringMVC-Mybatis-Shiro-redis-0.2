@@ -43,7 +43,7 @@
   </delete>
   <!-- 根据角色IDs删除-->
   <delete id="deleteByRids">
-  	delete from u_role_permission where rid in(${roleIds})
+  	delete from u_role_permission where rid in(#{roleIds,jdbcType=VARCHAR})
   </delete>
   
   
