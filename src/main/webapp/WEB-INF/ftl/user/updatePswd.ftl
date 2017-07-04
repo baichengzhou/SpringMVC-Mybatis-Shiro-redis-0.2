@@ -44,7 +44,7 @@
 				</div>
 			</div><#--/row-->
 		</div>
-		<script src="${cdn}/js/common/jquery/jquery.form-2.82.js?${_v}"></script>
+		<script src="/js/common/jquery/jquery.form-2.82.js?${_v}"></script>
 		<script>
 			$(function(){
 				var load;
