@@ -58,6 +58,14 @@
 		left join u_role_permission urp on urp.pid = up.id
 		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
 		group by up.id
+	  
+	  <!--
+		mysql 5.7 请用下面的。来自群内（上海|Java|大力水饺）
+		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+		right join u_role_permission urp on urp.pid = up.id
+		right join (select id from u_role where id = 1) ur on ur.id = urp.rid
+		group by up.id
+	  -->
   </select>
   <!-- 根据用ID查询permission -->
   <select id="findPermissionByUserId" resultType="java.lang.String">
