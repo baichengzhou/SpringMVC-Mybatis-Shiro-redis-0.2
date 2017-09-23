@@ -41,9 +41,25 @@ public class JedisShiroSessionRepository implements ShiroSessionRepository {
             }
             
             byte[] value = SerializeUtil.serialize(session);
-            long sessionTimeOut = session.getTimeout() / 1000;
-            Long expireTime = sessionTimeOut + SESSION_VAL_TIME_SPAN + (5 * 60);
-            getJedisManager().saveValueByKey(DB_INDEX, key, value, expireTime.intValue());
+
+
+            /**这里是我犯下的一个严重问题，但是也不会是致命，
+             * 我计算了下，之前上面不小心给我加了0，也就是 18000 / 3600 = 5 个小时
+             * 另外，session设置的是30分钟的话，并且加了一个(5 * 60)，一起算下来，session的失效时间是 5:35 的概念才会失效
+             * 我原来是存储session的有效期会比session的有效期会长，而且最终session的有效期是在这里【SESSION_VAL_TIME_SPAN】设置的。
+             *
+             * 这里没有走【shiro-config.properties】配置文件，需要注意的是【spring-shiro.xml】 也是直接配置的值，没有走【shiro-config.properties】
+             *
+             * PS  : 注意： 这里我们配置 redis的TTL单位是秒，而【spring-shiro.xml】配置的是需要加3个0（毫秒）。
+                long sessionTimeOut = session.getTimeout() / 1000;
+                Long expireTime = sessionTimeOut + SESSION_VAL_TIME_SPAN + (5 * 60);
+             */
+
+
+            /*
+            直接使用 (int) (session.getTimeout() / 1000) 的话，session失效和redis的TTL 同时生效
+             */
+            getJedisManager().saveValueByKey(DB_INDEX, key, value, (int) (session.getTimeout() / 1000));
         } catch (Exception e) {
         	LoggerUtils.fmtError(getClass(), e, "save session error，id:[%s]",session.getId());
         }
