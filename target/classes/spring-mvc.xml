@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ 	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.0.xsd
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+
+
+
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.sojson.*.controller;com.sojson.*.*.controller"/>
+
+ 	<mvc:annotation-driven  /><!-- cache-period="315360000" -->
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources mapping="/demo/**" location="/demo/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	
+	
+	<!-- 自动扫描 标签 -->
+	<context:component-scan base-package="com.sojson.*.*.tag;com.sojson.*.tag" />
+	<bean name="api" class="com.sojson.core.tags.APITemplateModel"></bean>
+	<bean name="springContextUtil" class="com.sojson.common.utils.SpringContextUtil" scope="singleton"></bean>
+	
+	<!-- 这个一定得有，注意了，如果其他配置也有需要这个，已经配置了，那不必了 -->
+	<mvc:annotation-driven  />
+	
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+		<property name="messageConverters">  
+	        <list>  
+	               <ref bean="mappingJacksonHttpMessageConverter" />  
+	        </list>  
+	    </property>  
+	</bean>  
+	        
+	<bean id="mappingJacksonHttpMessageConverter"  
+	    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+	     <property name = "supportedMediaTypes">  
+			  <list>  
+			    <bean class="org.springframework.http.MediaType">  
+			     <constructor-arg index="0" value="text"/>  
+			     <constructor-arg index="1" value="plain"/>  
+			     <constructor-arg index="2" value="UTF-8"/>  
+			    </bean>  
+			    <bean class="org.springframework.http.MediaType">  
+			     <constructor-arg index="0" value="*"/>  
+			     <constructor-arg index="1" value="*"/>  
+			     <constructor-arg index="2" value="UTF-8"/>  
+			    </bean>  
+			    <bean class="org.springframework.http.MediaType">  
+			     <constructor-arg index="0" value="text"/>  
+			     <constructor-arg index="1" value="*"/>  
+			     <constructor-arg index="2" value="UTF-8"/>  
+			    </bean>  
+			     <bean class="org.springframework.http.MediaType">  
+			     <constructor-arg index="0" value="application"/>  
+			     <constructor-arg index="1" value="json"/>  
+			     <constructor-arg index="2" value="UTF-8"/>  
+			    </bean>  
+			  </list>  
+		</property>  
+	</bean>   
+	
+	
+
+	<!--===============通用视图解析器 begin===============-->
+	<bean id="viewResolverCommon"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+<!--			可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑-->
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.InternalResourceView
+			</value>
+		</property>
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- 视图解析器 -->
+	<!-- 配置freeMarker视图解析器 -->
+	<bean id="viewResolverFtl"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" value="com.sojson.core.freemarker.extend.FreeMarkerViewExtend" />
+		<!-- 把Freemarker 扩展一下，把相关属性加入进去。。。 -->
+		<property name="contentType" value="text/html; charset=utf-8" />
+		<property name="cache" value="true" />
+		<property name="suffix" value=".ftl" />
+		<property name="order" value="0" />
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2"></property>
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+
+
+	<!-- 配置freeMarker 拓展-->
+	<bean id="freemarkerConfig"
+		class="com.sojson.core.freemarker.extend.FreeMarkerConfigExtend">
+		<property name="templateLoaderPath">
+			<value>/WEB-INF/ftl/</value>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+				<entry key="api" value-ref="api"/>
+			</map>
+		</property>
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+		<property name="freemarkerSettings">
+			<props><!-- 315360000 -->
+					<prop key="template_update_delay">0</prop>
+					<prop key="defaultEncoding">UTF-8</prop>
+					<prop key="url_escaping_charset">UTF-8</prop>
+					<prop key="locale">zh_CN</prop>
+					<prop key="boolean_format">true,false</prop>
+					<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+					<prop key="date_format">yyyy-MM-dd</prop>
+					<prop key="time_format">HH:mm:ss</prop>
+	<!--			<prop key="number_format">0.######</prop>-->
+				<prop key="number_format">#</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="auto_import">
+					<!-- 自动装载，引入Freemarker，用于Freemarker Macro引入 -->
+					/common/config/top.ftl as _top,
+					/common/config/left.ftl as _left
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+	<!--===============通用视图解析器 end===============-->
+	
+	
+	<!--  上传文件定义大小 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="utf-8">
+		<property name="maxUploadSize" value="50048000" />	
+	</bean>
+</beans>

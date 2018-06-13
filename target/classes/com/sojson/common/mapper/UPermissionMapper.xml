@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.UPermission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, url, name
+  </sql>
+  
+  <sql id="limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="where_all">
+  	<where>
+  	<if test="findContent != null and findContent !='' " >
+        and (
+        LOWER(name) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
+        LOWER(url) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")
+        )
+      </if>
+      </where>
+  </sql>
+  <select id="findAll" resultMap="BaseResultMap" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from u_permission 
+    <include refid="where_all"/>
+    <include refid="limit_sql" />
+  </select>
+  <select id="findCount" resultMap="BaseResultMap" >
+ 	 select count(id) from  u_permission
+  	<include refid="where_all" />
+  </select>
+  <!-- 根据角色获取权限，marker:0,没有权限，marker：非0(和up.id)一致表示有权限。 
+  	com.sojson.permission.bo.UPermissionBo中的这个方法是校验权限
+  	public boolean isCheck(){
+		return StringUtils.equals(roleId,marker);
+	}
+  -->
+  <select id="selectPermissionById" resultType="com.sojson.permission.bo.UPermissionBo">
+  	<!--原来的语句，应该是没错误。
+  		有同学说有错误，请给出mysql版本号。
+  		但是发现一个问题（我没尝试），在mysql 5.7版本中，没有结果集。故做了一下修改。
+		
+		2017年5月9日 15:27:46，又换回去了，因为Demo项目的数据库是5.6的，然后这2个语句都可以，你自己切换。
+  	 select up.id,ur.id roleId,up.name,up.url,min(ifnull(ur.id,0))marker from u_permission up
+		left join u_role_permission urp on urp.pid = up.id
+		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
+		group by up.id
+  	 -->
+		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+		left join u_role_permission urp on urp.pid = up.id
+		left join (select id from u_role where id = #{id,jdbcType=BIGINT}) ur on ur.id = urp.rid
+		group by up.id
+	  
+	  <!--
+		mysql 5.7 请用下面的。来自群内（上海|Java|大力水饺）
+		select up.id,ur.id roleId,up.name,up.url,ifnull(ur.id,0)marker from u_permission up
+		right join u_role_permission urp on urp.pid = up.id
+		right join (select id from u_role where id = 1) ur on ur.id = urp.rid
+		group by up.id
+	  -->
+  </select>
+  <!-- 根据用ID查询permission -->
+  <select id="findPermissionByUserId" resultType="java.lang.String">
+  		select p.url from u_permission p , u_role_permission rp, u_user_role ur 
+		where uid =#{id,jdbcType=BIGINT} and p.id = rp.pid and rp.rid = ur.rid
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from u_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.UPermission" >
+    insert into u_permission (id, url, name)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.UPermission" >
+    insert into u_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.UPermission" >
+    update u_permission
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sojson.common.model.UPermission" >
+    update u_permission
+    set url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

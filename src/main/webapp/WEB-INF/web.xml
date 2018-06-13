@@ -79,6 +79,17 @@
 		<servlet-name>springMvc</servlet-name>
 		<url-pattern>*.shtml</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>DruidStatView</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DruidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+
+
+
 	<welcome-file-list>
 		<welcome-file>/user/index.shtml</welcome-file>
 	</welcome-file-list>
