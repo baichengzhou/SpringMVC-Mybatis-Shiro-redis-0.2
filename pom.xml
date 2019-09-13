@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 
 	<name>www.sojson.com</name>
-	<url>http://maven.apache.org</url>
+	<url>http://shiro.itboy.net</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,8 +21,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
