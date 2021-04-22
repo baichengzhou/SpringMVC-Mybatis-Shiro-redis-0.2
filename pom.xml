@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.1.0</version>
+			<version>3.5.6</version>
 		</dependency>
 		<!-- Spring 在 3.2.13版本后，要单独引用 -->
 		<dependency>
