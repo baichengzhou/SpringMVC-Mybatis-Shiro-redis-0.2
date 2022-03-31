@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.2.5.RELEASE</version>
+			<version>5.3.18</version>
 		</dependency>
 
 		<dependency>
